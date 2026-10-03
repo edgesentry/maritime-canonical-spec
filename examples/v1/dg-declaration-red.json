@@ -1,0 +1,54 @@
+{
+  "declarationId": "550e8400-e29b-41d4-a716-446655440000",
+  "vesselInfo": {
+    "name": "ONE INNOVATION",
+    "imoNumber": "IMO 9074729",
+    "voyageNumber": "012E",
+    "callSign": "3EWA5"
+  },
+  "ports": {
+    "pol": "JPTYO",
+    "pod": "SGSIN",
+    "etd": "2026-04-01T08:00:00.000Z",
+    "eta": "2026-04-08T14:00:00.000Z"
+  },
+  "items": [
+    {
+      "unNumber": "1993",
+      "properShippingName": "FLAMMABLE LIQUID, N.O.S. (contains ethanol)",
+      "classDivision": "3",
+      "subsidiaryRisks": [],
+      "packingGroup": "II",
+      "flashPoint": {
+        "value": 23,
+        "unit": "CEL"
+      },
+      "marinePollutant": false,
+      "segregationGroups": [],
+      "quantity": {
+        "grossMass": {
+          "value": 15000,
+          "unit": "KGM"
+        },
+        "netMass": {
+          "value": 12500,
+          "unit": "KGM"
+        }
+      },
+      "packageCount": {
+        "count": 20,
+        "packagingTypeCode": "4G"
+      },
+      "containerNumber": "MSKU1234565",
+      "emergencyContact": {
+        "name": "DG Desk 24h",
+        "phone": "+81-3-1234-5678"
+      }
+    }
+  ],
+  "audit": {
+    "sourceDocumentSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "timestamp": "2026-03-28T02:15:00.000Z",
+    "status": "submitted"
+  }
+}

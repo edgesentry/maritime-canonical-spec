@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://maritime-ai.org/schemas/v1/identifiers.schema.json",
+  "title": "Maritime identifier schemas",
+  "description": "Normalized ISO 6346 container numbers, UN/LOCODE, and IMO ship numbers. Check-digit validation is enforced by the Zod runtime schemas, not by this JSON Schema alone.",
+  "type": "object",
+  "properties": {
+    "containerNumber": {
+      "type": "string",
+      "pattern": "^[A-Z]{4}\\d{7}$"
+    },
+    "unLocode": {
+      "type": "string",
+      "pattern": "^[A-Z]{2}[A-Z0-9]{3}$"
+    },
+    "imoNumber": {
+      "type": "string",
+      "pattern": "^\\d{7}$"
+    }
+  },
+  "required": [
+    "containerNumber",
+    "unLocode",
+    "imoNumber"
+  ],
+  "additionalProperties": false
+}
