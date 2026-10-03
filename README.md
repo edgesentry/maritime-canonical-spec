@@ -16,6 +16,27 @@ Also works with npm and yarn:
 npm install @maritime-ai/canonical-spec
 ```
 
+## Identifier validation
+
+Validate and normalize ISO 6346 container numbers, UN/LOCODE ports, and IMO ship numbers:
+
+```ts
+import {
+  ContainerNumberSchema,
+  ImoNumberSchema,
+  UnLocodeSchema,
+  isValidIso6346ContainerNumber,
+} from "@maritime-ai/canonical-spec";
+
+ContainerNumberSchema.parse("msku 123456-5"); // "MSKU1234565"
+UnLocodeSchema.parse("jp tyo"); // "JPTYO"
+ImoNumberSchema.parse("IMO 9074729"); // "9074729"
+
+isValidIso6346ContainerNumber("MSKU1234567"); // false (bad check digit)
+```
+
+Standalone helpers (`computeIso6346CheckDigit`, `computeImoCheckDigit`, …) are also exported for use without Zod.
+
 ## Development
 
 Requires Node.js 22+ and [pnpm](https://pnpm.io/).
