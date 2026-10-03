@@ -1,0 +1,306 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://maritime-ai.org/schemas/v1/dg-declaration.schema.json",
+  "title": "Dangerous Goods Declaration",
+  "description": "IMO IMDG / FAL Form 7 / OpenDGD-aligned canonical DG declaration (normalized wire shape). Identifier check digits are runtime Zod concerns.",
+  "type": "object",
+  "properties": {
+    "declarationId": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+    },
+    "vesselInfo": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "imoNumber": {
+          "type": "string",
+          "pattern": "^\\d{7}$"
+        },
+        "voyageNumber": {
+          "type": "string",
+          "minLength": 1
+        },
+        "callSign": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "name",
+        "imoNumber",
+        "voyageNumber",
+        "callSign"
+      ],
+      "additionalProperties": false
+    },
+    "ports": {
+      "type": "object",
+      "properties": {
+        "pol": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}[A-Z0-9]{3}$"
+        },
+        "pod": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}[A-Z0-9]{3}$"
+        },
+        "etd": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+        },
+        "eta": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+        }
+      },
+      "required": [
+        "pol",
+        "pod"
+      ],
+      "additionalProperties": false
+    },
+    "items": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "unNumber": {
+            "type": "string",
+            "pattern": "^\\d{4}$"
+          },
+          "properShippingName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "classDivision": {
+            "type": "string",
+            "pattern": "^(?:[1-9]|1\\.[1-6]|2\\.[1-3]|4\\.[1-3]|5\\.[12]|6\\.1)$"
+          },
+          "subsidiaryRisks": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^(?:[1-9]|1\\.[1-6]|2\\.[1-3]|4\\.[1-3]|5\\.[12]|6\\.1)$"
+            }
+          },
+          "packingGroup": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "I",
+                  "II",
+                  "III"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "flashPoint": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "unit": {
+                "type": "string",
+                "const": "CEL"
+              }
+            },
+            "required": [
+              "value",
+              "unit"
+            ],
+            "additionalProperties": false
+          },
+          "marinePollutant": {
+            "type": "boolean"
+          },
+          "segregationGroups": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "quantity": {
+            "type": "object",
+            "properties": {
+              "grossMass": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "unit": {
+                    "type": "string",
+                    "enum": [
+                      "KGM",
+                      "TNE",
+                      "GRM"
+                    ]
+                  }
+                },
+                "required": [
+                  "value",
+                  "unit"
+                ],
+                "additionalProperties": false
+              },
+              "netMass": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "unit": {
+                    "type": "string",
+                    "enum": [
+                      "KGM",
+                      "TNE",
+                      "GRM"
+                    ]
+                  }
+                },
+                "required": [
+                  "value",
+                  "unit"
+                ],
+                "additionalProperties": false
+              },
+              "netExplosiveMass": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "unit": {
+                    "type": "string",
+                    "enum": [
+                      "KGM",
+                      "TNE",
+                      "GRM"
+                    ]
+                  }
+                },
+                "required": [
+                  "value",
+                  "unit"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "grossMass"
+            ],
+            "additionalProperties": false
+          },
+          "packageCount": {
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
+              },
+              "packagingTypeCode": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 16
+              }
+            },
+            "required": [
+              "count",
+              "packagingTypeCode"
+            ],
+            "additionalProperties": false
+          },
+          "containerNumber": {
+            "type": "string",
+            "pattern": "^[A-Z]{4}\\d{7}$"
+          },
+          "emergencyContact": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "phone": {
+                "type": "string",
+                "minLength": 3
+              }
+            },
+            "required": [
+              "name",
+              "phone"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "unNumber",
+          "properShippingName",
+          "classDivision",
+          "packingGroup",
+          "marinePollutant",
+          "quantity",
+          "packageCount",
+          "containerNumber",
+          "emergencyContact"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "audit": {
+      "type": "object",
+      "properties": {
+        "sourceDocumentSha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "submitted",
+            "accepted",
+            "rejected"
+          ]
+        }
+      },
+      "required": [
+        "sourceDocumentSha256",
+        "timestamp",
+        "status"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "declarationId",
+    "vesselInfo",
+    "ports",
+    "items",
+    "audit"
+  ],
+  "additionalProperties": false
+}

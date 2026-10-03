@@ -1,0 +1,48 @@
+{
+  "declarationId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+  "vesselInfo": {
+    "name": "ONE INNOVATION",
+    "imoNumber": "9074729",
+    "voyageNumber": "012E",
+    "callSign": "3EWA5"
+  },
+  "ports": {
+    "pol": "jp tyo",
+    "pod": "sg sin",
+    "etd": "2026-04-01T08:00:00.000Z"
+  },
+  "items": [
+    {
+      "unNumber": "3082",
+      "properShippingName": "ENVIRONMENTALLY HAZARDOUS SUBSTANCE, LIQUID, N.O.S.",
+      "classDivision": "9",
+      "packingGroup": "III",
+      "marinePollutant": true,
+      "segregationGroups": ["18"],
+      "quantity": {
+        "grossMass": {
+          "value": 18000,
+          "unit": "KGM"
+        },
+        "netMass": {
+          "value": 16200,
+          "unit": "KGM"
+        }
+      },
+      "packageCount": {
+        "count": 36,
+        "packagingTypeCode": "31HA1"
+      },
+      "containerNumber": "msku 123456-5",
+      "emergencyContact": {
+        "name": "Terminal Safety Hotline",
+        "phone": "+81-45-000-0000"
+      }
+    }
+  ],
+  "audit": {
+    "sourceDocumentSha256": "a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e",
+    "timestamp": "2026-03-25T10:00:00.000Z",
+    "status": "draft"
+  }
+}

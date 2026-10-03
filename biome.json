@@ -6,7 +6,7 @@
     "useIgnoreFile": true
   },
   "files": {
-    "ignore": ["dist", "node_modules", "pnpm-lock.yaml"]
+    "ignore": ["dist", "node_modules", "pnpm-lock.yaml", "schemas"]
   },
   "formatter": {
     "enabled": true,

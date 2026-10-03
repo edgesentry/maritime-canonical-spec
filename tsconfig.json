@@ -14,7 +14,8 @@
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
     "noEmit": true,
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals", "node"],
+    "resolveJsonModule": true
   },
   "include": ["src", "tsup.config.ts", "vitest.config.ts"]
 }

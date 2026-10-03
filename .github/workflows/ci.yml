@@ -20,6 +20,59 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  dependency-review:
+    name: Dependency review
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Dependency review
+        uses: actions/dependency-review-action@2031cfc080254a8a887f58cffee85186f0e49e48 # v4.9.0
+        with:
+          fail-on-severity: high
+          license-check: true
+          vulnerability-check: true
+          comment-summary-in-pr: on-failure
+          allow-licenses: >-
+            Apache-2.0,
+            MIT,
+            BSD-2-Clause,
+            BSD-3-Clause,
+            0BSD,
+            ISC,
+            PSF-2.0,
+            MPL-2.0,
+            Zlib,
+            CC0-1.0,
+            MIT-CMU,
+            Unlicense,
+            BlueOak-1.0.0
+
+  license-check:
+    name: License check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22"
+
+      - name: Enable pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@9.15.9 --activate
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Fail on forbidden licenses
+        run: pnpm exec node scripts/check-licenses.mjs
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -48,6 +101,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Audit dependencies
+        run: pnpm audit --audit-level=high
+
       - name: Typecheck
         run: pnpm typecheck
 
@@ -56,6 +112,12 @@ jobs:
 
       - name: Test
         run: pnpm test
+
+      - name: Generate JSON Schemas
+        run: pnpm build:schemas
+
+      - name: Check schema artifacts are up to date
+        run: git diff --exit-code -- schemas/
 
       - name: Build
         run: pnpm build
