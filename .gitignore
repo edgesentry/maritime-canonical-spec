@@ -1,0 +1,16 @@
+_inputs/
+
+node_modules/
+dist/
+coverage/
+
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+.DS_Store
+*.tsbuildinfo
+.vite/
+.turbo/
