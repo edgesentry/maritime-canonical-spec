@@ -16,6 +16,10 @@ pnpm add @maritime-ai/canonical-spec
 
 - [IMDG 隔離検証エンジン](engine/segregation.md) — IMDG Code Table 7.2.4 に基づく決定論的な混載判定
 
+## API リファレンス
+
+- [TypeScript API リファレンス](api/index.md) — 公開スキーマ・バリデータ・隔離エンジンの export（`src/index.ts`）。詳細ページの本文は英語です。
+
 ## ライセンス
 
 [Apache License 2.0](https://github.com/edgesentry/maritime-canonical-spec/blob/main/LICENSE) の下で提供されます。

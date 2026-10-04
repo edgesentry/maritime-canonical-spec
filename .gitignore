@@ -5,6 +5,7 @@ dist/
 coverage/
 site/
 .venv/
+docs/api/reference/
 
 *.log
 npm-debug.log*
