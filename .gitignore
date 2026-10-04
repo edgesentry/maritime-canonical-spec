@@ -3,6 +3,8 @@ _inputs/
 node_modules/
 dist/
 coverage/
+site/
+.venv/
 
 *.log
 npm-debug.log*

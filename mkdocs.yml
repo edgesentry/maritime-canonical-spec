@@ -1,0 +1,70 @@
+site_name: EdgeSentry maritime-canonical-spec
+site_description: Canonical data model and IMDG segregation engine for maritime shipping (EdgeSentry)
+site_url: https://edgesentry.github.io/maritime-canonical-spec/
+repo_url: https://github.com/edgesentry/maritime-canonical-spec
+repo_name: edgesentry/maritime-canonical-spec
+edit_uri: edit/main/docs/
+docs_dir: docs
+site_dir: site
+strict: true
+
+copyright: >
+  Copyright &copy; EdgeSentry —
+  Licensed under the <a href="https://github.com/edgesentry/maritime-canonical-spec/blob/main/LICENSE">Apache License 2.0</a>
+
+theme:
+  name: material
+  language: en
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.indexes
+    - search.suggest
+    - content.code.copy
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue grey
+      accent: light blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: blue grey
+      accent: light blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+plugins:
+  - search
+  - i18n:
+      docs_structure: suffix
+      fallback_to_default: true
+      reconfigure_material: true
+      languages:
+        - locale: en
+          default: true
+          name: English
+          build: true
+        - locale: ja
+          name: 日本語
+          build: true
+          nav_translations:
+            Home: ホーム
+            Engine: エンジン
+            Segregation: 隔離検証
+
+nav:
+  - Home: index.md
+  - Engine:
+      - Segregation: engine/segregation.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - tables
+  - toc:
+      permalink: true

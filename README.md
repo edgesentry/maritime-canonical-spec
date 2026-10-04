@@ -1,10 +1,17 @@
-# @maritime-ai/canonical-spec
+# EdgeSentry `maritime-canonical-spec`
 
-International standards-compliant **canonical data model** for maritime shipping, port logistics, and marine insurance.
+**EdgeSentry** project repository for an international standards-compliant **canonical data model** for maritime shipping, port logistics, and marine insurance.
 
-This package defines a neutral intermediate specification aligned with global standards (IMO, DCSA, UN/CEFACT, ISO). Country- or platform-specific EDI mappings are kept outside the core model.
+This repository defines a neutral intermediate specification aligned with global standards (IMO, DCSA, UN/CEFACT, ISO). Country- or platform-specific EDI mappings are kept outside the core model.
+
+Published documentation (English / Japanese):
+
+- English: <https://edgesentry.github.io/maritime-canonical-spec/>
+- Japanese: <https://edgesentry.github.io/maritime-canonical-spec/ja/>
 
 ## Install
+
+The npm package name is `@maritime-ai/canonical-spec` (install identifier only; project identity is EdgeSentry → `maritime-canonical-spec`).
 
 ```bash
 pnpm add @maritime-ai/canonical-spec
@@ -89,8 +96,8 @@ const report = validateSegregation(declaration.items);
 
 Normative docs:
 
-- English: [`docs/engine/segregation.en.md`](./docs/engine/segregation.en.md)
-- Japanese: [`docs/engine/segregation.ja.md`](./docs/engine/segregation.ja.md)
+- English: [Segregation engine](https://edgesentry.github.io/maritime-canonical-spec/engine/segregation/) ([source](./docs/engine/segregation.en.md))
+- Japanese: [隔離検証エンジン](https://edgesentry.github.io/maritime-canonical-spec/ja/engine/segregation/) ([source](./docs/engine/segregation.ja.md))
 
 ## JSON Schema artifacts
 
@@ -116,6 +123,24 @@ pnpm check   # typecheck + lint + test + build:schemas + build
 Individual scripts: `pnpm typecheck`, `pnpm lint`, `pnpm test`, `pnpm build:schemas`, `pnpm build`.
 
 `pnpm build` emits dual ESM (`.mjs`) / CJS (`.cjs`) bundles and TypeScript declarations under `dist/`. Published packages also include `schemas/`.
+
+### Documentation site (MkDocs)
+
+Bilingual docs (Material for MkDocs) are published to GitHub Pages. Local preview:
+
+```bash
+python3 -m venv .venv
+.venv/bin/pip install -r requirements-docs.txt
+pnpm docs:dev
+```
+
+Strict build (same as CI):
+
+```bash
+pnpm docs:build
+```
+
+CI installs the same pins from `requirements-docs.txt` via pip (no local `.venv` required on Actions).
 
 ## Standards references
 
