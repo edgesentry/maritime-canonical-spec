@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-import { DGDeclarationSchema } from "./dangerous-goods.js";
+import { DGDeclarationSchema, ImdgClassDivisionSchema } from "./dangerous-goods.js";
 
 const examplesDir = join(dirname(fileURLToPath(import.meta.url)), "../../examples/v1");
 
@@ -61,6 +61,14 @@ describe("DGDeclarationSchema", () => {
       classDivision: "10",
     });
     expect(DGDeclarationSchema.safeParse(fixture).success).toBe(false);
+  });
+
+  it("accepts class division 6.2", () => {
+    expect(ImdgClassDivisionSchema.safeParse("6.2").success).toBe(true);
+    const fixture = withMutatedItem(loadExample("dg-declaration-red.json"), {
+      classDivision: "6.2",
+    });
+    expect(DGDeclarationSchema.safeParse(fixture).success).toBe(true);
   });
 
   it("rejects a corrupt container check digit", () => {
