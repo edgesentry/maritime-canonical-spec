@@ -2,7 +2,7 @@
 
 This technical specification is designed for **software engineers with zero background in maritime logistics, port operations, or maritime law**. It details the design rationale, domain logic, and API specification of the deterministic segregation validation engine (`validateSegregation`) in `@maritime-ai/canonical-spec`, enabling seamless integration into core logistics pipelines, EDI gateways, and operational workflows.
 
-日本語: [`segregation.ja.md`](./segregation.ja.md)
+日本語: [`segregation.ja.md`](https://github.com/edgesentry/maritime-canonical-spec/blob/main/docs/engine/segregation.ja.md) · [site (JA)](https://edgesentry.github.io/maritime-canonical-spec/ja/engine/segregation/)
 
 ---
 

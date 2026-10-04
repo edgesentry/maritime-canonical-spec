@@ -2,7 +2,7 @@
 
 本ドキュメントは、**港湾・海運・海事法令の前提知識を持たないソフトウェアエンジニア**が、本パッケージの隔離検証エンジン（`validateSegregation`）の設計思想・ドメインロジック・API仕様を正確に理解し、基幹業務システムやゲートウェイに組み込むための技術仕様書です。
 
-English: [`segregation.en.md`](./segregation.en.md)
+English: [`segregation.en.md`](https://github.com/edgesentry/maritime-canonical-spec/blob/main/docs/engine/segregation.en.md) · [site (EN)](https://edgesentry.github.io/maritime-canonical-spec/engine/segregation/)
 
 ---
 

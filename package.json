@@ -27,7 +27,9 @@
     "build": "tsup",
     "build:schemas": "tsx scripts/build-schemas.mjs",
     "check:licenses": "node scripts/check-licenses.mjs",
-    "check": "pnpm typecheck && pnpm lint && pnpm test && pnpm build:schemas && pnpm build"
+    "check": "pnpm typecheck && pnpm lint && pnpm test && pnpm build:schemas && pnpm build",
+    "docs:dev": ".venv/bin/python -m mkdocs serve",
+    "docs:build": ".venv/bin/python -m mkdocs build --strict"
   },
   "engines": {
     "node": ">=22"
