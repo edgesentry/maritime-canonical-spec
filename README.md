@@ -76,6 +76,22 @@ const declaration = DGDeclarationSchema.parse({
 
 Synthetic red/white form fixtures live under [`examples/v1/`](./examples/v1/).
 
+## IMDG segregation validation
+
+Deterministic co-loading checks against IMDG Code Table 7.2.4 (optional Japanese 危規則 citation overlay):
+
+```ts
+import { validateSegregation } from "@maritime-ai/canonical-spec";
+
+const report = validateSegregation(declaration.items);
+// report.status: "PASS" | "WARNING" | "CRITICAL_VIOLATION"
+```
+
+Normative docs:
+
+- English: [`docs/engine/segregation.en.md`](./docs/engine/segregation.en.md)
+- Japanese: [`docs/engine/segregation.ja.md`](./docs/engine/segregation.ja.md)
+
 ## JSON Schema artifacts
 
 Language-agnostic Draft 2020-12 schemas are generated from Zod and committed under [`schemas/v1/`](./schemas/v1/):

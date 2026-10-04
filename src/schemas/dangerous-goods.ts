@@ -12,7 +12,7 @@ import {
 export const ImdgClassDivisionSchema = z
   .string()
   .regex(
-    /^(?:[1-9]|1\.[1-6]|2\.[1-3]|4\.[1-3]|5\.[12]|6\.1)$/,
+    /^(?:[1-9]|1\.[1-6]|2\.[1-3]|4\.[1-3]|5\.[12]|6\.[12])$/,
     "classDivision must be a valid IMDG class or division code",
   );
 

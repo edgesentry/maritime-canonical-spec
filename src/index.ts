@@ -52,3 +52,20 @@ export {
 } from "./utils/iso6346.js";
 
 export { isValidUnLocode, normalizeUnLocode } from "./utils/unlocode.js";
+
+export {
+  hazardsForLookup,
+  isClass1Hazard,
+  lookupSegregation,
+  lookupSegregationByClass,
+  pickMostStringent,
+  segregationTermName,
+  toSegregationTableKey,
+  validateSegregation,
+  type SegregationCode,
+  type SegregationConflict,
+  type SegregationOptions,
+  type SegregationStatus,
+  type SegregationTableKey,
+  type SegregationValidationReport,
+} from "./engine/segregation/index.js";
