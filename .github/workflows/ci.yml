@@ -45,6 +45,7 @@ jobs:
             0BSD,
             ISC,
             PSF-2.0,
+            Python-2.0,
             MPL-2.0,
             Zlib,
             CC0-1.0,

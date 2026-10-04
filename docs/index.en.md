@@ -16,6 +16,10 @@ pnpm add @maritime-ai/canonical-spec
 
 - [IMDG segregation validation engine](engine/segregation.md) — deterministic co-loading checks against IMDG Code Table 7.2.4
 
+## API Reference
+
+- [TypeScript API reference](api/index.md) — public schemas, validators, and segregation engine exports (`src/index.ts`)
+
 ## License
 
 Licensed under the [Apache License 2.0](https://github.com/edgesentry/maritime-canonical-spec/blob/main/LICENSE).

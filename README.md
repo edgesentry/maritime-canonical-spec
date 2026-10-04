@@ -8,6 +8,7 @@ Published documentation (English / Japanese):
 
 - English: <https://edgesentry.github.io/maritime-canonical-spec/>
 - Japanese: <https://edgesentry.github.io/maritime-canonical-spec/ja/>
+- TypeScript API reference: <https://edgesentry.github.io/maritime-canonical-spec/api/> ([JA intro](https://edgesentry.github.io/maritime-canonical-spec/ja/api/))
 
 ## Install
 
@@ -99,6 +100,8 @@ Normative docs:
 - English: [Segregation engine](https://edgesentry.github.io/maritime-canonical-spec/engine/segregation/) ([source](./docs/engine/segregation.en.md))
 - Japanese: [隔離検証エンジン](https://edgesentry.github.io/maritime-canonical-spec/ja/engine/segregation/) ([source](./docs/engine/segregation.ja.md))
 
+API surface (generated TypeDoc): [API reference](https://edgesentry.github.io/maritime-canonical-spec/api/).
+
 ## JSON Schema artifacts
 
 Language-agnostic Draft 2020-12 schemas are generated from Zod and committed under [`schemas/v1/`](./schemas/v1/):
@@ -126,21 +129,24 @@ Individual scripts: `pnpm typecheck`, `pnpm lint`, `pnpm test`, `pnpm build:sche
 
 ### Documentation site (MkDocs)
 
-Bilingual docs (Material for MkDocs) are published to GitHub Pages. Local preview:
+Bilingual docs (Material for MkDocs) are published to GitHub Pages. The TypeScript API reference is generated with TypeDoc into `docs/api/reference/` (gitignored) and folded into the site build.
+
+Local preview:
 
 ```bash
 python3 -m venv .venv
 .venv/bin/pip install -r requirements-docs.txt
-pnpm docs:dev
+pnpm docs:dev   # runs docs:api then mkdocs serve
 ```
 
 Strict build (same as CI):
 
 ```bash
-pnpm docs:build
+pnpm docs:api    # TypeDoc → docs/api/reference/
+pnpm docs:build  # docs:api + mkdocs build --strict
 ```
 
-CI installs the same pins from `requirements-docs.txt` via pip (no local `.venv` required on Actions).
+CI installs npm deps for API generation, then the same pins from `requirements-docs.txt` via pip (no local `.venv` required on Actions).
 
 ## Standards references
 

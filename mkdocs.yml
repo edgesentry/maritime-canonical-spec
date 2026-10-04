@@ -55,11 +55,13 @@ plugins:
             Home: ホーム
             Engine: エンジン
             Segregation: 隔離検証
+            API Reference: API リファレンス
 
 nav:
   - Home: index.md
   - Engine:
       - Segregation: engine/segregation.md
+  - API Reference: api/index.md
 
 markdown_extensions:
   - admonition
