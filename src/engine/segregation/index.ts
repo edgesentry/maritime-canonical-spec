@@ -1,3 +1,15 @@
+export {
+  hazardsForLookup,
+  isClass1Hazard,
+  type SegregationTableKey,
+  toSegregationTableKey,
+} from "./normalize.js";
+export {
+  lookupSegregation,
+  lookupSegregationByClass,
+  pickMostStringent,
+  segregationTermName,
+} from "./table.js";
 export type {
   SegregationCode,
   SegregationConflict,
@@ -6,15 +18,3 @@ export type {
   SegregationValidationReport,
 } from "./types.js";
 export { validateSegregation } from "./validate.js";
-export {
-  hazardsForLookup,
-  isClass1Hazard,
-  toSegregationTableKey,
-  type SegregationTableKey,
-} from "./normalize.js";
-export {
-  lookupSegregation,
-  lookupSegregationByClass,
-  pickMostStringent,
-  segregationTermName,
-} from "./table.js";

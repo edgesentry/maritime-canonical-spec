@@ -2,70 +2,66 @@
 export const PACKAGE_NAME = "@maritime-ai/canonical-spec";
 
 export {
-  ContainerNumberNormalizedSchema,
-  ContainerNumberSchema,
-  ImoNumberNormalizedSchema,
-  ImoNumberSchema,
-  UnLocodeNormalizedSchema,
-  UnLocodeSchema,
-  type ContainerNumber,
-  type ImoNumber,
-  type UnLocode,
-} from "./schemas/identifiers.js";
-
-export {
-  DeclarationAuditSchema,
-  DGDeclarationSchema,
-  DGDeclarationWireSchema,
-  DgItemSchema,
-  EmergencyContactSchema,
-  FlashPointSchema,
-  ImdgClassDivisionSchema,
-  MassQuantitySchema,
-  PackageCountSchema,
-  PackingGroupSchema,
-  PortsSchema,
-  VesselInfoSchema,
-  type DeclarationAudit,
-  type DGDeclaration,
-  type DgItem,
-  type EmergencyContact,
-  type FlashPoint,
-  type ImdgClassDivision,
-  type MassQuantity,
-  type PackageCount,
-  type PackingGroup,
-  type Ports,
-  type VesselInfo,
-} from "./schemas/dangerous-goods.js";
-
-export {
-  computeImoCheckDigit,
-  isValidImoNumber,
-  normalizeImoNumber,
-} from "./utils/imo-number.js";
-
-export {
-  computeIso6346CheckDigit,
-  isValidIso6346ContainerNumber,
-  normalizeContainerNumber,
-} from "./utils/iso6346.js";
-
-export { isValidUnLocode, normalizeUnLocode } from "./utils/unlocode.js";
-
-export {
   hazardsForLookup,
   isClass1Hazard,
   lookupSegregation,
   lookupSegregationByClass,
   pickMostStringent,
-  segregationTermName,
-  toSegregationTableKey,
-  validateSegregation,
   type SegregationCode,
   type SegregationConflict,
   type SegregationOptions,
   type SegregationStatus,
   type SegregationTableKey,
   type SegregationValidationReport,
+  segregationTermName,
+  toSegregationTableKey,
+  validateSegregation,
 } from "./engine/segregation/index.js";
+
+export {
+  type DeclarationAudit,
+  DeclarationAuditSchema,
+  type DGDeclaration,
+  DGDeclarationSchema,
+  DGDeclarationWireSchema,
+  type DgItem,
+  DgItemSchema,
+  type EmergencyContact,
+  EmergencyContactSchema,
+  type FlashPoint,
+  FlashPointSchema,
+  type ImdgClassDivision,
+  ImdgClassDivisionSchema,
+  type MassQuantity,
+  MassQuantitySchema,
+  type PackageCount,
+  PackageCountSchema,
+  type PackingGroup,
+  PackingGroupSchema,
+  type Ports,
+  PortsSchema,
+  type VesselInfo,
+  VesselInfoSchema,
+} from "./schemas/dangerous-goods.js";
+export {
+  type ContainerNumber,
+  ContainerNumberNormalizedSchema,
+  ContainerNumberSchema,
+  type ImoNumber,
+  ImoNumberNormalizedSchema,
+  ImoNumberSchema,
+  type UnLocode,
+  UnLocodeNormalizedSchema,
+  UnLocodeSchema,
+} from "./schemas/identifiers.js";
+export {
+  computeImoCheckDigit,
+  isValidImoNumber,
+  normalizeImoNumber,
+} from "./utils/imo-number.js";
+export {
+  computeIso6346CheckDigit,
+  isValidIso6346ContainerNumber,
+  normalizeContainerNumber,
+} from "./utils/iso6346.js";
+export { isValidUnLocode, normalizeUnLocode } from "./utils/unlocode.js";

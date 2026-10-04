@@ -135,7 +135,7 @@ function flashpointConflicts(items: readonly DgItem[]): {
       continue;
     }
     const fp = item.flashPoint;
-    if (!fp || fp.unit !== "CEL" || !(fp.value < FLASHPOINT_WARNING_CELSIUS)) {
+    if (fp?.unit !== "CEL" || !(fp.value < FLASHPOINT_WARNING_CELSIUS)) {
       continue;
     }
     conflicts.push({
