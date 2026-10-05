@@ -1,5 +1,8 @@
 {
   "declarationId": "550e8400-e29b-41d4-a716-446655440000",
+  "bookingNumber": "BK-ONE-012E-001",
+  "carrierName": "Ocean Network Express",
+  "documentKind": "red_paper",
   "vesselInfo": {
     "name": "ONE INNOVATION",
     "imoNumber": "IMO 9074729",
@@ -50,5 +53,23 @@
     "sourceDocumentSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "timestamp": "2026-03-28T02:15:00.000Z",
     "status": "submitted"
+  },
+  "lifecycle": {
+    "status": "SUBMITTED",
+    "revision": 2,
+    "caseId": "11111111-1111-4111-8111-111111111111",
+    "previousDeclarationId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+    "delta": [
+      {
+        "path": "documentKind",
+        "from": "white_paper",
+        "to": "red_paper"
+      },
+      {
+        "path": "items[0].unNumber",
+        "from": "3082",
+        "to": "1993"
+      }
+    ]
   }
 }
