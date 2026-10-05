@@ -92,13 +92,37 @@ export const DeclarationAuditSchema = z.object({
   status: z.enum(["draft", "submitted", "accepted", "rejected"]),
 });
 
+/** White paper / red paper / last-minute amendment hint from extraction. */
+export const DocumentKindSchema = z.enum(["white_paper", "red_paper", "amendment"]);
+
+/** Operational DG document lifecycle (distinct from audit.status completeness). */
+export const LifecycleStatusSchema = z.enum(["PRE_ARRIVAL", "SUBMITTED", "AMENDED"]);
+
+export const FieldDeltaSchema = z.object({
+  path: z.string().min(1),
+  from: z.unknown().optional(),
+  to: z.unknown().optional(),
+});
+
+export const DeclarationLifecycleSchema = z.object({
+  status: LifecycleStatusSchema,
+  revision: z.number().int().positive(),
+  caseId: z.uuid(),
+  previousDeclarationId: z.uuid().optional(),
+  delta: z.array(FieldDeltaSchema).optional(),
+});
+
 function createDGDeclarationSchema(ids: IdentifierBundle) {
   return z.object({
     declarationId: z.uuid(),
+    bookingNumber: z.string().min(1).optional(),
+    carrierName: z.string().min(1).optional(),
+    documentKind: DocumentKindSchema.optional(),
     vesselInfo: createVesselInfoSchema(ids),
     ports: createPortsSchema(ids),
     items: z.array(createDgItemSchema(ids)).min(1),
     audit: DeclarationAuditSchema,
+    lifecycle: DeclarationLifecycleSchema.optional(),
   });
 }
 
@@ -140,4 +164,8 @@ export type DgItem = z.infer<typeof DgItemSchema>;
 export type VesselInfo = z.infer<typeof VesselInfoSchema>;
 export type Ports = z.infer<typeof PortsSchema>;
 export type DeclarationAudit = z.infer<typeof DeclarationAuditSchema>;
+export type DocumentKind = z.infer<typeof DocumentKindSchema>;
+export type LifecycleStatus = z.infer<typeof LifecycleStatusSchema>;
+export type FieldDelta = z.infer<typeof FieldDeltaSchema>;
+export type DeclarationLifecycle = z.infer<typeof DeclarationLifecycleSchema>;
 export type DGDeclaration = z.infer<typeof DGDeclarationSchema>;

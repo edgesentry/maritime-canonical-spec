@@ -48,6 +48,20 @@ describe("DGDeclarationSchema", () => {
       expect(result.data.ports.pod).toBe("SGSIN");
       expect(result.data.items[0]?.marinePollutant).toBe(true);
       expect(result.data.items[0]?.containerNumber).toBe("MSKU1234565");
+      expect(result.data.bookingNumber).toBe("BK-ONE-012E-001");
+      expect(result.data.documentKind).toBe("white_paper");
+      expect(result.data.lifecycle?.status).toBe("PRE_ARRIVAL");
+    }
+  });
+
+  it("accepts optional lifecycle and booking fields on red form", () => {
+    const result = DGDeclarationSchema.safeParse(loadExample("dg-declaration-red.json"));
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.documentKind).toBe("red_paper");
+      expect(result.data.lifecycle?.status).toBe("SUBMITTED");
+      expect(result.data.lifecycle?.revision).toBe(2);
+      expect(result.data.lifecycle?.delta?.[0]?.path).toBe("documentKind");
     }
   });
 
