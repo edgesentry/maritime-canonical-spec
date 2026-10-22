@@ -1,0 +1,41 @@
+# Weekly + PR dependency vulnerability scanning via Google's OSV-Scanner reusable workflows.
+# SARIF upload requires security-events: write. Do not add a CodeQL workflow here —
+# CodeQL uses GitHub default setup (an advanced codeql.yml conflicts with default setup).
+name: OSV-Scanner
+
+on:
+  schedule:
+    # Wednesday 00:00 UTC == 08:00 SGT
+    - cron: "0 0 * * 3"
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  scan-scheduled:
+    name: Scheduled / manual full scan
+    if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
+    permissions:
+      actions: read
+      security-events: write
+      contents: read
+    uses: google/osv-scanner-action/.github/workflows/osv-scanner-reusable.yml@ef6dfdf01765802d5a8dbc3c39852a6128b00af0 # v2.7.0
+    with:
+      scan-args: |-
+        --recursive
+        ./
+
+  scan-pr:
+    name: Pull request diff scan
+    if: ${{ github.event_name == 'pull_request' }}
+    permissions:
+      actions: read
+      security-events: write
+      contents: read
+    uses: google/osv-scanner-action/.github/workflows/osv-scanner-reusable-pr.yml@ef6dfdf01765802d5a8dbc3c39852a6128b00af0 # v2.7.0
+    with:
+      scan-args: |-
+        --recursive
+        ./
