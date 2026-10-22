@@ -9,9 +9,9 @@ export type SegregationConflict = {
   properShippingNames: [string, string];
   classes: [string, string];
   containerNumber: string;
-  /** Table cell or flashpoint sentinel `"FP"`. */
-  requiredSegregation: SegregationCode | "FP";
-  /** True when same-CTU ban applies (numeric codes 1–4). */
+  /** Table cell, flashpoint sentinel `"FP"`, or `"UNMAPPED"` when a class cannot be keyed. */
+  requiredSegregation: SegregationCode | "FP" | "UNMAPPED";
+  /** True when same-CTU ban applies (numeric codes 1–4), or when evaluation cannot proceed. */
   violated: boolean;
   message: string;
 };

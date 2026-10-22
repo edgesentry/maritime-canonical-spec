@@ -146,6 +146,8 @@ console.log(report.citations);
   ・セル値「1, 2, 3, 4」: violated: true ➔ CRITICAL_VIOLATION（同一コンテナ混載禁止）
   ・セル値「X」または「*」: violated: false ➔ WARNING（個別規定参照要）
   ・Class 3 かつ引火点 < 23℃: violated: false ➔ WARNING（requiredSegregation: "FP"）
+  ・Table 7.2.4 に写像できない等級（例: 区分なしの "2"/"4"/"5"/"6"）:
+      violated: true ➔ CRITICAL_VIOLATION（requiredSegregation: "UNMAPPED"; fail-closed — PASS にしない）
 ```
 
 ### IMDG Table 7.2.4 隔離等級の工学的意味
@@ -159,6 +161,7 @@ console.log(report.citations);
 | **`X`** | **DGL Specific** | 原則混載可能だが個別のDGL（危険物リスト）確認を要する | ⚠️ **WARNING**（目視確認勧告） |
 | **`*`** | **Class 1 Specific** | 火薬類相互の互換性グループ規定（7.2.7）に基づく | ⚠️ **WARNING**（互換性確認勧告） |
 | **`FP`** | **Low Flash Point** | 引火性液体で引火点 &lt; 23℃（高揮発性密閉リスク） | ⚠️ **WARNING**（低引火点警戒） |
+| **`UNMAPPED`** | **Unmapped class** | Table 7.2.4 に写像できない等級（例: 区分なしの Class 2/4/5/6） | ❌ **CRITICAL_VIOLATION**（Fail closed） |
 
 ---
 
@@ -173,8 +176,8 @@ type SegregationConflict = {
   properShippingNames: [string, string];// 衝突した品名のペア
   classes: [string, string];            // 衝突した危険等級のペア
   containerNumber: string;              // 該当コンテナ番号
-  requiredSegregation: "1" | "2" | "3" | "4" | "X" | "*" | "FP";
-  violated: boolean;                    // 法令違反（混載禁止）フラグ
+  requiredSegregation: "1" | "2" | "3" | "4" | "X" | "*" | "FP" | "UNMAPPED";
+  violated: boolean;                    // 法令違反（混載禁止）または評価不能フラグ
   message: string;                      // 監査・表示用メッセージ
 };
 

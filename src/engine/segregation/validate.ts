@@ -1,5 +1,5 @@
 import type { DgItem } from "../../schemas/dangerous-goods.js";
-import { hazardsForLookup } from "./normalize.js";
+import { hazardsForLookup, toSegregationTableKey } from "./normalize.js";
 import { lookupSegregationByClass, pickMostStringent, segregationTermName } from "./table.js";
 import type {
   SegregationCode,
@@ -15,6 +15,7 @@ const CITATION_CLASS1 = "IMDG Code 7.2.7";
 const CITATION_ART21 = "危規則第21条";
 const CITATION_ART33 = "危規則第33条";
 const CITATION_FLASHPOINT = "IMDG Class 3 flashpoint caution";
+const CITATION_UNMAPPED = "IMDG Code 7.2.4 Table 7.2.4 (class/division mapping)";
 
 const FLASHPOINT_WARNING_CELSIUS = 23;
 
@@ -61,6 +62,37 @@ function pairCodes(a: DgItem, b: DgItem): SegregationCode[] {
     }
   }
   return codes;
+}
+
+/** Hazard labels on an item that cannot be placed on Table 7.2.4. */
+function unmappedHazards(item: DgItem): string[] {
+  return hazardsForLookup(item.classDivision, item.subsidiaryRisks).filter(
+    (hazard) => toSegregationTableKey(hazard) === null,
+  );
+}
+
+function unmappedClassConflict(
+  a: DgItem,
+  b: DgItem,
+  unmapped: readonly string[],
+  japan: boolean,
+): { conflict: SegregationConflict; citations: string[] } {
+  const named = [...new Set(unmapped)].map((c) => `"${c}"`).join(", ");
+  return {
+    conflict: {
+      unNumbers: [a.unNumber, b.unNumber],
+      properShippingNames: [a.properShippingName, b.properShippingName],
+      classes: [a.classDivision, b.classDivision],
+      containerNumber: a.containerNumber,
+      requiredSegregation: "UNMAPPED",
+      violated: true,
+      message:
+        `Cannot evaluate IMDG 7.2.4 segregation for UN ${a.unNumber} / UN ${b.unNumber} ` +
+        `in container ${a.containerNumber}: class/division ${named} cannot be mapped to a ` +
+        `Table 7.2.4 key (bare class without division is not evaluable; fail closed).`,
+    },
+    citations: [CITATION_UNMAPPED, CITATION_SAME_CTU, ...japanCitations(japan)],
+  };
 }
 
 function conflictForPair(
@@ -180,6 +212,13 @@ export function validateSegregation(
       for (let j = i + 1; j < group.length; j += 1) {
         const a = group[i];
         const b = group[j];
+        const unmapped = [...unmappedHazards(a), ...unmappedHazards(b)];
+        if (unmapped.length > 0) {
+          const blocked = unmappedClassConflict(a, b, unmapped, japan);
+          conflicts.push(blocked.conflict);
+          citationLists.push(blocked.citations);
+          continue;
+        }
         const code = pickMostStringent(pairCodes(a, b));
         if (!code) {
           continue;

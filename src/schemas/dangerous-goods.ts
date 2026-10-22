@@ -8,11 +8,15 @@ import {
   UnLocodeSchema,
 } from "./identifiers.js";
 
-/** IMDG primary class / division (e.g. "3", "4.1", "5.2", "8"). */
+/**
+ * IMDG primary class / division (e.g. "3", "4.1", "5.2", "8").
+ * Bare classes 2/4/5/6 (no division) are rejected: they cannot be mapped onto
+ * IMDG Table 7.2.4. Bare 1/3/7/8/9 remain valid (1 maps to the 1.1/1.2/1.5 row).
+ */
 export const ImdgClassDivisionSchema = z
   .string()
   .regex(
-    /^(?:[1-9]|1\.[1-6]|2\.[1-3]|4\.[1-3]|5\.[12]|6\.[12])$/,
+    /^(?:1(?:\.[1-6])?|2\.[1-3]|3|4\.[1-3]|5\.[12]|6\.[12]|[789])$/,
     "classDivision must be a valid IMDG class or division code",
   );
 

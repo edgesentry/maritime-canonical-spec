@@ -151,6 +151,8 @@ The validation pipeline executes deterministically as a pure function through th
       violated: false ➔ WARNING (Manual review of individual DGL / compatibility schedule required)
   • Class 3 with flash point < 23°C:
       violated: false ➔ WARNING (requiredSegregation: "FP", closed-space volatility precaution)
+  • Class/division not mappable to Table 7.2.4 (e.g. bare "2"/"4"/"5"/"6"):
+      violated: true ➔ CRITICAL_VIOLATION (requiredSegregation: "UNMAPPED"; fail closed — never PASS)
 ```
 
 ### Engineering Interpretation of Table 7.2.4 Cell Values
@@ -164,6 +166,7 @@ The validation pipeline executes deterministically as a pure function through th
 | **`X`** | **DGL Specific** | Generally permissible; consult Dangerous Goods List (DGL) | ⚠️ **WARNING** (Advisory review) |
 | **`*`** | **Class 1 Specific** | Governed by explosive compatibility group provisions (7.2.7) | ⚠️ **WARNING** (Compatibility review) |
 | **`FP`** | **Low Flash Point** | Flammable liquid with flash point &lt; 23°C (high vapor density risk) | ⚠️ **WARNING** (Precautionary notice) |
+| **`UNMAPPED`** | **Unmapped class** | Class/division cannot be placed on Table 7.2.4 (e.g. bare class 2/4/5/6) | ❌ **CRITICAL_VIOLATION** (Fail closed) |
 
 ---
 
@@ -178,8 +181,8 @@ type SegregationConflict = {
   properShippingNames: [string, string];// Conflicting proper shipping names
   classes: [string, string];            // Conflicting class division pair
   containerNumber: string;              // Target container identifier
-  requiredSegregation: "1" | "2" | "3" | "4" | "X" | "*" | "FP";
-  violated: boolean;                    // Violation flag (true = co-loading prohibited)
+  requiredSegregation: "1" | "2" | "3" | "4" | "X" | "*" | "FP" | "UNMAPPED";
+  violated: boolean;                    // Violation flag (true = co-loading prohibited / unevaluable)
   message: string;                      // Audit message & diagnostic detail
 };
 
