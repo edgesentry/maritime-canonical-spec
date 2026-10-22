@@ -77,6 +77,22 @@ describe("DGDeclarationSchema", () => {
     expect(DGDeclarationSchema.safeParse(fixture).success).toBe(false);
   });
 
+  it("rejects bare classes 2/4/5/6 that cannot map to Table 7.2.4", () => {
+    for (const bare of ["2", "4", "5", "6"] as const) {
+      expect(ImdgClassDivisionSchema.safeParse(bare).success).toBe(false);
+      const fixture = withMutatedItem(loadExample("dg-declaration-red.json"), {
+        classDivision: bare,
+      });
+      expect(DGDeclarationSchema.safeParse(fixture).success).toBe(false);
+    }
+  });
+
+  it("accepts bare classes that map to Table 7.2.4 (1/3/7/8/9)", () => {
+    for (const code of ["1", "3", "7", "8", "9"] as const) {
+      expect(ImdgClassDivisionSchema.safeParse(code).success).toBe(true);
+    }
+  });
+
   it("accepts class division 6.2", () => {
     expect(ImdgClassDivisionSchema.safeParse("6.2").success).toBe(true);
     const fixture = withMutatedItem(loadExample("dg-declaration-red.json"), {

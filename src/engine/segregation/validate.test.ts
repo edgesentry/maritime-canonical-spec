@@ -136,4 +136,73 @@ describe("validateSegregation", () => {
     expect(report.citations).not.toContain("危規則第21条");
     expect(report.citations).not.toContain("危規則第33条");
   });
+
+  /**
+   * Bare class values (no division) such as "2"/"4"/"5"/"6" are not Table 7.2.4
+   * keys. Previously validateSegregation silently skipped those pairs and could
+   * return PASS (fail-open). Engine must fail closed even if callers bypass schema.
+   */
+  it("H: bare class 2 vs 1.1 same CTU → not PASS (fail closed)", () => {
+    const report = validateSegregation([
+      item({
+        unNumber: "1001",
+        classDivision: "2" as DgItem["classDivision"],
+      }),
+      item({ unNumber: "0004", classDivision: "1.1" }),
+    ]);
+    expect(report.status).not.toBe("PASS");
+    expect(report.status).toBe("CRITICAL_VIOLATION");
+    expect(report.conflicts[0]?.requiredSegregation).toBe("UNMAPPED");
+    expect(report.conflicts[0]?.violated).toBe(true);
+    expect(report.conflicts[0]?.message).toContain('"2"');
+  });
+
+  it("I: bare class 4 vs 5.1 same CTU → not PASS (fail closed)", () => {
+    const report = validateSegregation([
+      item({
+        unNumber: "1325",
+        classDivision: "4" as DgItem["classDivision"],
+      }),
+      item({ unNumber: "1479", classDivision: "5.1" }),
+    ]);
+    expect(report.status).not.toBe("PASS");
+    expect(report.status).toBe("CRITICAL_VIOLATION");
+    expect(report.conflicts.some((c) => c.requiredSegregation === "UNMAPPED")).toBe(true);
+    expect(report.conflicts[0]?.message).toContain('"4"');
+  });
+
+  it("J: bare class 5 vs 3 and bare 6 vs 1.1 → not PASS", () => {
+    const bare5 = validateSegregation([
+      item({
+        unNumber: "1479",
+        classDivision: "5" as DgItem["classDivision"],
+      }),
+      item({ unNumber: "1993", classDivision: "3" }),
+    ]);
+    const bare6 = validateSegregation([
+      item({
+        unNumber: "2814",
+        classDivision: "6" as DgItem["classDivision"],
+      }),
+      item({ unNumber: "0004", classDivision: "1.1" }),
+    ]);
+    expect(bare5.status).not.toBe("PASS");
+    expect(bare6.status).not.toBe("PASS");
+    expect(bare5.conflicts[0]?.message).toContain('"5"');
+    expect(bare6.conflicts[0]?.message).toContain('"6"');
+  });
+
+  it("K: unmapped subsidiary risk fails closed even when primary maps", () => {
+    const report = validateSegregation([
+      item({
+        unNumber: "2014",
+        classDivision: "8",
+        subsidiaryRisks: ["2" as DgItem["classDivision"]],
+      }),
+      item({ unNumber: "1993", classDivision: "3" }),
+    ]);
+    expect(report.status).not.toBe("PASS");
+    expect(report.conflicts.some((c) => c.requiredSegregation === "UNMAPPED")).toBe(true);
+    expect(report.conflicts[0]?.message).toContain('"2"');
+  });
 });
